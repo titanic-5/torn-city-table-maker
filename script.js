@@ -184,17 +184,15 @@ async function exportTableToYATA() {
         progress.value = (count / rows.length) * 100;
         progressText.textContent = `${count} / ${rows.length}`;
 
+        const stats = [strength, defense, speed, dexterity, total].map((stat) => (stat === "N/A" ? "0" : stat));
+
         // copied format of tornstats export
         return [
           null, // row number (#)
-          `${name} [${id}]`,
+          `"${name} [${id}]"`,
           data.level || "",
           data.faction.faction_name || null,
-          strength,
-          defense,
-          speed,
-          dexterity,
-          total,
+          ...stats,
           null, // FF Bonus
           formattedDate,
         ];
@@ -205,7 +203,7 @@ async function exportTableToYATA() {
 
   const filtered = results.filter(Boolean);
   const csvHeader = '#,Name,Level,Faction,Strength,Defense,Speed,Dexterity,Total,"FF Bonus","Last Update"\r\n';
-  const csvBody = filtered.map((r, index) => [index + 1, ...r.slice(1)].join(",")).join("\r\n");
+  const csvBody = filtered.map((r) => [r[0], ...r.slice(1)].join(",")).join("\r\n");
   const csv = csvHeader + csvBody;
   generateFile(csv);
 }
