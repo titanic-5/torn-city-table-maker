@@ -2,61 +2,34 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <meta name="google-site-verification" content="S66L_T0VGoKZeQ7TmQ_PekpK8S4oP0WKoeyI05Q1vYQ" />
-    <title>Parse Data</title>
+    <title>Spies -> Table</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+    <link rel="stylesheet" href="styles.css" />
     <script src="script.js"></script>
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
-    <style>
-    textarea {
-      min-height:200px;
-    }
-    progress::-webkit-progress-bar {
-      background-color: var(--bg);
-    }
-    </style>
-    <script>
-      // store the user's API key locally and display it onload
-      function storeInput() {
-        var input = document.getElementById('apikey').value;
-        localStorage.setItem('previousInput', input);
-      }
-  
-      function displayPreviousInput() {
-        var previousInput = localStorage.getItem('previousInput');
-        if (previousInput) {
-          document.getElementById('apikey').value = previousInput;
-        }
-      }
-
-      window.onload = function() {
-        displayPreviousInput();
-      };
-    </script>
   </head>
   <body>
     <label>Put your spy data in here</label>
-    <textarea placeholder="Name:Test [123456]&#10;Level:100&#10;Strength:2,000&#10;Speed:0&#10;Dexterity:1,000,000&#10;Defense:0&#10;Total:7,404,069,929" id="data-input"></textarea>
-    
+    <textarea
+      placeholder="Name:Test [123456]&#10;Level:100&#10;Strength:2,000&#10;Speed:0&#10;Dexterity:1,000,000&#10;Defense:0&#10;Total:7,404,069,929"
+      id="data-input"
+    ></textarea>
+
     <div>
-      <button onclick="storeInput(); parseData()">Submit</button>
+      <button onclick="parseData()">Submit</button>
       <button onclick="sortTable()">Sort Table by Total</button>
     </div>
 
     <label>Requires a Minimal Access API Key to export ready for YATA</label>
-    <input id="apikey"></input>
+    <input id="apikey" onchange="storeInput()" />
 
     <div>
       <button onclick="exportTableToCSV()">Export (CSV)</button>
-      <button onclick="storeInput(); showProgress(); exportTableToYATA()">Export YATA (CSV)</button>
+      <button onclick="showProgress(); exportTableToYATA()">Export YATA (CSV)</button>
     </div>
     <label>All timestamps will be set at time of export</label>
 
-    <div id="progress-bar"> <br/>
-      <!-- empty -->
-    </div>
+    <div id="progress-bar"><br /></div>
 
-    <div id="result">
-      <!-- empty -->
-    </div>
+    <div id="result"></div>
   </body>
 </html>
